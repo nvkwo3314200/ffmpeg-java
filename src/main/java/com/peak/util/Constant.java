@@ -7,4 +7,7 @@ public class Constant {
 	public static final String PRO_KEY_NAME = "name";
 	
 	public static final String MAX_THREAD = "max_thread";
+	public static final String LOCAL_MAX_THREAD = "local_max_thread";
+	public static final String WAIT_TIME = "wait_time";
+	
 }

@@ -5,7 +5,7 @@ import java.util.concurrent.Callable;
 
 import com.peak.util.CommandUtils;
 
-public class Ffmpeg implements Runnable, Callable<Boolean>{
+public class Ffmpeg implements  Callable<Boolean>{
 	private String softPath;
 	private String sourceFile;
 	private String targetFile;

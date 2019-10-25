@@ -5,19 +5,19 @@ import java.util.List;
 
 /**
  * 
- * -fromats ÏÔÊ¾¿ÉÓÃµÄ¸ñÊ½£¬±à½âÂëµÄ£¬Ğ­ÒéµÄ¡£¡£¡£
- *-f fmt Ç¿ÆÈ²ÉÓÃ¸ñÊ½fmt
- *-i filename ÊäÈëÎÄ¼ş
- *-y ¸²¸ÇÊä³öÎÄ¼ş
- *-t duration ÉèÖÃ¼ÍÂ¼Ê±¼ä hh:mm:ss[.xxx]¸ñÊ½µÄ¼ÇÂ¼Ê±¼äÒ²Ö§³Ö
- *-ss position ËÑË÷µ½Ö¸¶¨µÄÊ±¼ä [-]hh:mm:ss[.xxx]µÄ¸ñÊ½Ò²Ö§³Ö
- *-title string ÉèÖÃ±êÌâ
- *-author string ÉèÖÃ×÷Õß
- *-copyright string ÉèÖÃ°æÈ¨
- *-comment string ÉèÖÃÆÀÂÛ 
+ * -fromats æ˜¾ç¤ºå¯ç”¨çš„æ ¼å¼ï¼Œç¼–è§£ç çš„ï¼Œåè®®çš„ã€‚ã€‚ã€‚
+ *-f fmt å¼ºè¿«é‡‡ç”¨æ ¼å¼fmt
+ *-i filename è¾“å…¥æ–‡ä»¶
+ *-y è¦†ç›–è¾“å‡ºæ–‡ä»¶
+ *-t duration è®¾ç½®çºªå½•æ—¶é—´ hh:mm:ss[.xxx]æ ¼å¼çš„è®°å½•æ—¶é—´ä¹Ÿæ”¯æŒ
+ *-ss position æœç´¢åˆ°æŒ‡å®šçš„æ—¶é—´ [-]hh:mm:ss[.xxx]çš„æ ¼å¼ä¹Ÿæ”¯æŒ
+ *-title string è®¾ç½®æ ‡é¢˜
+ *-author string è®¾ç½®ä½œè€…
+ *-copyright string è®¾ç½®ç‰ˆæƒ
+ *-comment string è®¾ç½®è¯„è®º 
  * ffmpeg Command
  * @author Pan
- * ffmpeg -i http://youku.cdn2-youku.com/20180424/10793_9dbaf4e1/index.m3u8 -acodec copy -vcodec copy -f mp4 Èı¹ú»úÃÜ34.mp4
+ * ffmpeg -i http://youku.cdn2-youku.com/20180424/10793_9dbaf4e1/index.m3u8 -acodec copy -vcodec copy -f mp4 ä¸‰å›½æœºå¯†34.mp4
  */
 public class FfmpegCommand {
 	private List<String> command = new ArrayList<String>();
@@ -45,8 +45,8 @@ public class FfmpegCommand {
 	}
 	
 	/**
-	 * * ÊÓÆµ½âÂë
-	 * -vcodec codec Ç¿ÖÆÊ¹ÓÃcodec±à½âÂë·½Ê½¡£Èç¹ûÓÃcopy±íÊ¾Ô­Ê¼±à½âÂëÊı¾İ±ØĞë±»¿½±´¡£
+	 * * è§†é¢‘è§£ç 
+	 * -vcodec codec å¼ºåˆ¶ä½¿ç”¨codecç¼–è§£ç æ–¹å¼ã€‚å¦‚æœç”¨copyè¡¨ç¤ºåŸå§‹ç¼–è§£ç æ•°æ®å¿…é¡»è¢«æ‹·è´ã€‚
 	 * @param copy
 	 */
 	public void vcodecEncode(boolean copy) {
@@ -58,8 +58,8 @@ public class FfmpegCommand {
 	
 	
 	/**
-	 *  ÒôÆµ½âÂë
-	 * -acodec codec Ê¹ÓÃcodec±à½âÂë¡£Èç¹ûÓÃcopy±íÊ¾Ô­Ê¼±à½âÂëÊı¾İ±ØĞë±»¿½±´¡£
+	 *  éŸ³é¢‘è§£ç 
+	 * -acodec codec ä½¿ç”¨codecç¼–è§£ç ã€‚å¦‚æœç”¨copyè¡¨ç¤ºåŸå§‹ç¼–è§£ç æ•°æ®å¿…é¡»è¢«æ‹·è´ã€‚
 	 * @param copy
 	 */
 	public void acodecEncode(boolean copy) {

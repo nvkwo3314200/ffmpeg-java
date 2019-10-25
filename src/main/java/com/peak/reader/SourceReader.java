@@ -18,10 +18,12 @@ public class SourceReader {
 	public static Map<String, String> getSourceByFile(String filePath, String separator) {
 		Map<String, String> map = new HashMap<String, String>();
 		try {
-			List<String> list = FileUtils.readLines(new File(filePath));
+			List<String> list = FileUtils.readLines(new File(filePath), "UTF-8");
 			for(String item : list) {
 				if(item.trim().startsWith(COMMEND_SEPARATOR)) continue ;
-				String[] spits = item.split("\\" + separator);
+				if(item == null || "".equals(item.trim())) continue;
+				String sep = String.format("\\%s", separator);
+				String[] spits = item.split(sep);
 				map.put(spits[0], spits[1]);
 			}
 		} catch (IOException e) {

@@ -4,9 +4,10 @@ import java.io.File;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 import com.peak.ffmpeg.Ffmpeg;
 import com.peak.reader.PropertyReader;
@@ -16,12 +17,16 @@ import com.peak.util.FileUtils;
 
 public class SourceConvert {
 	private Executor exec;
+	private ExecutorService executorService = Executors.newCachedThreadPool();
 	private String softPath;
 	private String sourceFile;
 	private String targetFilePath;
 	private String name;
 	private String fmt;
 	private Integer maxThread;
+	private Integer count = 1;
+	private Integer localMaxThread;
+	private Long waitTime;
 	
 	public SourceConvert(String fmt) {
 		String maxThreadStr = PropertyReader.GetValueByKey(null, Constant.MAX_THREAD);
@@ -31,6 +36,8 @@ public class SourceConvert {
 		sourceFile = PropertyReader.GetValueByKey(null, Constant.PRO_KEY_SOURCE_FILE);
 		targetFilePath = PropertyReader.GetValueByKey(null, Constant.PRO_KEY_TARGET_FILE_PATH);
 		name = PropertyReader.GetValueByKey(null, Constant.PRO_KEY_NAME);
+		localMaxThread = Integer.valueOf(PropertyReader.GetValueByKey(null, Constant.LOCAL_MAX_THREAD));
+		waitTime = Long.valueOf(PropertyReader.GetValueByKey(null, Constant.WAIT_TIME));
 		this.fmt = fmt;
 	}
 	
@@ -40,7 +47,7 @@ public class SourceConvert {
 			if(!checkKeyExist(key)) {
 				String targetFile = createTargetFile(key);
 				FileUtils.createParent(targetFile);
-				exec.execute(new Ffmpeg(softPath, sourceMap.get(key), targetFile));
+//				exec.execute(new Ffmpeg(softPath, sourceMap.get(key), targetFile));
 			}
 		}
 	}
@@ -50,14 +57,24 @@ public class SourceConvert {
 		StringBuffer sb = new StringBuffer();
 		for(String key : sourceMap.keySet()) {
 			if(!checkKeyExist(key)) {
+				if(count % localMaxThread == 0) {
+					if(executorService.awaitTermination(10, TimeUnit.SECONDS)) {
+						executorService.shutdownNow();
+					}
+					Thread.sleep(waitTime * 1000);
+				}
+				count ++;
+				if(executorService.isShutdown()) {
+					executorService = Executors.newCachedThreadPool();
+				}
 				String targetFile = createTargetFile(key);
 				FileUtils.createParent(targetFile);
-				FutureTask<Boolean> ft = new FutureTask<Boolean>(new Ffmpeg(softPath, sourceMap.get(key), targetFile));
-				ft.run();
+				executorService.submit(new Ffmpeg(softPath, sourceMap.get(key), targetFile));
+				FutureTask<Boolean> ft = (FutureTask<Boolean>) executorService.submit(new Ffmpeg(softPath, sourceMap.get(key), targetFile));
 				if(!ft.get()) {
 					sb.append(key).append("\n");
 				}else {
-					System.out.println(String.format("%s ÕýÔÚÏÂÔØ", key));
+					System.out.println(String.format("%s æ­£åœ¨ä¸‹è½½", key));
 				}
 			}
 		}

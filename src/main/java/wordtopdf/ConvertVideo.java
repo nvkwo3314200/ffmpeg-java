@@ -7,14 +7,14 @@ import java.util.List;
   
 
 public class ConvertVideo {
-     private final static String PATH = "¡¾ĞèÒª×ªÂëµÄÊÓÆµÂ·¾¶¡¿";  
+     private final static String PATH = "ã€éœ€è¦è½¬ç çš„è§†é¢‘è·¯å¾„ã€‘";  
       
         public static void main(String[] args) {  
-            if (!checkfile(PATH)) {   //ÅĞ¶ÏÂ·¾¶ÊÇ²»ÊÇÒ»¸öÎÄ¼ş
+            if (!checkfile(PATH)) {   //åˆ¤æ–­è·¯å¾„æ˜¯ä¸æ˜¯ä¸€ä¸ªæ–‡ä»¶
                 System.out.println(PATH + " is not file");  
                 return;  
             }  
-            if (process()) {        //Ö´ĞĞ×ªÂëÈÎÎñ
+            if (process()) {        //æ‰§è¡Œè½¬ç ä»»åŠ¡
                 System.out.println("ok");  
             }  
         }  
@@ -28,18 +28,18 @@ public class ConvertVideo {
         }  
         
         private static boolean process() { 
-            // ÅĞ¶ÏÊÓÆµµÄÀàĞÍ
+            // åˆ¤æ–­è§†é¢‘çš„ç±»å‹
             int type = checkContentType();  
             boolean status = false;  
-            //Èç¹ûÊÇffmpeg¿ÉÒÔ×ª»»µÄÀàĞÍÖ±½Ó×ªÂë£¬·ñÔòÏÈÓÃmencoder×ªÂë³ÉAVI
+            //å¦‚æœæ˜¯ffmpegå¯ä»¥è½¬æ¢çš„ç±»å‹ç›´æ¥è½¬ç ï¼Œå¦åˆ™å…ˆç”¨mencoderè½¬ç æˆAVI
             if (type == 0) {  
-                System.out.println("Ö±½Ó½«ÎÄ¼ş×ªÎªflvÎÄ¼ş");  
-                status = processFLV(PATH);// Ö±½Ó½«ÎÄ¼ş×ªÎªflvÎÄ¼ş  
+                System.out.println("ç›´æ¥å°†æ–‡ä»¶è½¬ä¸ºflvæ–‡ä»¶");  
+                status = processFLV(PATH);// ç›´æ¥å°†æ–‡ä»¶è½¬ä¸ºflvæ–‡ä»¶  
             } else if (type == 1) {  
                 String avifilepath = processAVI(type);  
                 if (avifilepath == null)  
-                    return false;// aviÎÄ¼şÃ»ÓĞµÃµ½  
-                status = processFLV(avifilepath);// ½«avi×ªÎªflv  
+                    return false;// aviæ–‡ä»¶æ²¡æœ‰å¾—åˆ°  
+                status = processFLV(avifilepath);// å°†aviè½¬ä¸ºflv  
             }  
             return status;  
         }  
@@ -47,7 +47,7 @@ public class ConvertVideo {
         private static int checkContentType() {  
             String type = PATH.substring(PATH.lastIndexOf(".") + 1, PATH.length())  
                     .toLowerCase();  
-            // ffmpegÄÜ½âÎöµÄ¸ñÊ½£º£¨asx£¬asf£¬mpg£¬wmv£¬3gp£¬mp4£¬mov£¬avi£¬flvµÈ£©  
+            // ffmpegèƒ½è§£æçš„æ ¼å¼ï¼šï¼ˆasxï¼Œasfï¼Œmpgï¼Œwmvï¼Œ3gpï¼Œmp4ï¼Œmovï¼Œaviï¼Œflvç­‰ï¼‰  
             if (type.equals("avi")) {  
                 return 0;  
             } else if (type.equals("mpg")) {  
@@ -67,8 +67,8 @@ public class ConvertVideo {
             } else if (type.equals("flv")) {  
                 return 0;  
             }  
-            // ¶ÔffmpegÎŞ·¨½âÎöµÄÎÄ¼ş¸ñÊ½(wmv9£¬rm£¬rmvbµÈ),  
-            // ¿ÉÒÔÏÈÓÃ±ğµÄ¹¤¾ß£¨mencoder£©×ª»»Îªavi(ffmpegÄÜ½âÎöµÄ)¸ñÊ½.  
+            // å¯¹ffmpegæ— æ³•è§£æçš„æ–‡ä»¶æ ¼å¼(wmv9ï¼Œrmï¼Œrmvbç­‰),  
+            // å¯ä»¥å…ˆç”¨åˆ«çš„å·¥å…·ï¼ˆmencoderï¼‰è½¬æ¢ä¸ºavi(ffmpegèƒ½è§£æçš„)æ ¼å¼.  
             else if (type.equals("wmv9")) {  
                 return 1;  
             } else if (type.equals("rm")) {  
@@ -80,7 +80,7 @@ public class ConvertVideo {
         }  
            
       
-        // ¶ÔffmpegÎŞ·¨½âÎöµÄÎÄ¼ş¸ñÊ½(wmv9£¬rm£¬rmvbµÈ), ¿ÉÒÔÏÈÓÃ±ğµÄ¹¤¾ß£¨mencoder£©×ª»»Îªavi(ffmpegÄÜ½âÎöµÄ)¸ñÊ½.  
+        // å¯¹ffmpegæ— æ³•è§£æçš„æ–‡ä»¶æ ¼å¼(wmv9ï¼Œrmï¼Œrmvbç­‰), å¯ä»¥å…ˆç”¨åˆ«çš„å·¥å…·ï¼ˆmencoderï¼‰è½¬æ¢ä¸ºavi(ffmpegèƒ½è§£æçš„)æ ¼å¼.  
         private static String processAVI(int type) {  
             List<String> commend = new ArrayList<String>();  
             commend.add("D:\\ffmpeg\\mencoder");  
@@ -96,20 +96,20 @@ public class ConvertVideo {
             commend.add("-of");  
             commend.add("avi");  
             commend.add("-o");  
-            commend.add("¡¾´æ·Å×ªÂëºóÊÓÆµµÄÂ·¾¶£¬¼Ç×¡Ò»¶¨ÊÇ.aviºó×ºµÄÎÄ¼şÃû¡¿");  
+            commend.add("ã€å­˜æ”¾è½¬ç åè§†é¢‘çš„è·¯å¾„ï¼Œè®°ä½ä¸€å®šæ˜¯.aviåç¼€çš„æ–‡ä»¶åã€‘");  
             try {  
-                //µ÷ÓÃÏß³ÌÃüÁîÆô¶¯×ªÂë
+                //è°ƒç”¨çº¿ç¨‹å‘½ä»¤å¯åŠ¨è½¬ç 
                 ProcessBuilder builder = new ProcessBuilder();  
                 builder.command(commend);  
                 builder.start();  
-                return "¡¾´æ·Å×ªÂëºóÊÓÆµµÄÂ·¾¶£¬¼Ç×¡Ò»¶¨ÊÇ.aviºó×ºµÄÎÄ¼şÃû¡¿";  
+                return "ã€å­˜æ”¾è½¬ç åè§†é¢‘çš„è·¯å¾„ï¼Œè®°ä½ä¸€å®šæ˜¯.aviåç¼€çš„æ–‡ä»¶åã€‘";  
             } catch (Exception e) {  
                 e.printStackTrace();  
                 return null;  
             }  
         }  
       
-        // ffmpegÄÜ½âÎöµÄ¸ñÊ½£º£¨asx£¬asf£¬mpg£¬wmv£¬3gp£¬mp4£¬mov£¬avi£¬flvµÈ£©  
+        // ffmpegèƒ½è§£æçš„æ ¼å¼ï¼šï¼ˆasxï¼Œasfï¼Œmpgï¼Œwmvï¼Œ3gpï¼Œmp4ï¼Œmovï¼Œaviï¼Œflvç­‰ï¼‰  
         private static boolean processFLV(String oldfilepath) {  
       
             if (!checkfile(PATH)) {  
@@ -117,7 +117,7 @@ public class ConvertVideo {
                 return false;  
             }  
               
-            // ÎÄ¼şÃüÃû  
+            // æ–‡ä»¶å‘½å  
             Calendar c = Calendar.getInstance();  
             String savename = String.valueOf(c.getTimeInMillis())+ Math.round(Math.random() * 100000);  
             List<String> commend = new ArrayList<String>();  
@@ -134,12 +134,12 @@ public class ConvertVideo {
             commend.add("15");  
             commend.add("-s");  
             commend.add("600x500");  
-            commend.add("¡¾´æ·Å×ªÂëºóÊÓÆµµÄÂ·¾¶£¬¼Ç×¡Ò»¶¨ÊÇ.flvºó×ºµÄÎÄ¼şÃû¡¿");  
+            commend.add("ã€å­˜æ”¾è½¬ç åè§†é¢‘çš„è·¯å¾„ï¼Œè®°ä½ä¸€å®šæ˜¯.flvåç¼€çš„æ–‡ä»¶åã€‘");  
       
             try {  
                 Runtime runtime = Runtime.getRuntime();  
                 Process proce = null; 
-                //ÊÓÆµ½ØÍ¼ÃüÁî£¬·âÃæÍ¼¡£  8ÊÇ´ú±íµÚ8ÃëµÄÊ±ºò½ØÍ¼
+                //è§†é¢‘æˆªå›¾å‘½ä»¤ï¼Œå°é¢å›¾ã€‚  8æ˜¯ä»£è¡¨ç¬¬8ç§’çš„æ—¶å€™æˆªå›¾
                 String cmd = "";  
                 String cut = "     c:\\ffmpeg\\ffmpeg.exe   -i   "  
                         + oldfilepath  
@@ -147,7 +147,7 @@ public class ConvertVideo {
                         + "a.jpg";  
                 String cutCmd = cmd + cut;  
                 proce = runtime.exec(cutCmd);  
-                //µ÷ÓÃÏß³ÌÃüÁî½øĞĞ×ªÂë
+                //è°ƒç”¨çº¿ç¨‹å‘½ä»¤è¿›è¡Œè½¬ç 
                 ProcessBuilder builder = new ProcessBuilder(commend);                 
                  builder.command(commend);  
                 builder.start();  
