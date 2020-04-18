@@ -23,7 +23,11 @@ public class FfmpegCommand {
 	private List<String> command = new ArrayList<String>();
 	
 	public FfmpegCommand(String softPath) {
-		command.add(softPath + "//ffmpeg");
+		if(softPath != null && softPath != "") {
+			command.add(softPath + "/ffmpeg");
+		} else {
+			command.add("ffmpeg");
+		}
 	}
 	
 	public void addInputFile(String filePath) {
