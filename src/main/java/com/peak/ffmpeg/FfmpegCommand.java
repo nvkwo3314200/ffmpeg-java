@@ -23,7 +23,7 @@ public class FfmpegCommand {
 	private List<String> command = new ArrayList<String>();
 	
 	public FfmpegCommand(String softPath) {
-		if(softPath != null && softPath != "") {
+		if(softPath != null && !"".equals(softPath)) {
 			command.add(softPath + "/ffmpeg");
 		} else {
 			command.add("ffmpeg");
