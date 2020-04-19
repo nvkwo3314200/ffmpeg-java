@@ -1,14 +1,14 @@
 package com.peak.reader;
 
+import lombok.extern.slf4j.Slf4j;
 import java.io.*;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 
+@Slf4j
 public class PropertyReader {
-	private static final Logger logger = Logger.getLogger(PropertyReader.class);
 	private static String DEFAULT_SOURCE;
-	
+
 	static {
 		DEFAULT_SOURCE = System.getProperty("user.dir") + "/" + "system.properties";
 	}
@@ -21,7 +21,7 @@ public class PropertyReader {
             String value = pps.getProperty(key);
             return value;
         }catch (IOException e) {
-        	logger.error(e);
+        	log.error("{}", e);
         }
         return null;
     }
