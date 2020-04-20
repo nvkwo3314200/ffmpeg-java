@@ -11,12 +11,13 @@ import com.peak.util.Constant;
 import com.peak.util.FileUtils;
 import com.peak.util.MyExecutorService;
 import com.peak.util.ThreadUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Data
 public class SourceConvert {
 	private String softPath;
-	private String sourceFile;
 	private String targetFilePath;
 	private String name;
 	private String fmt;
@@ -27,9 +28,9 @@ public class SourceConvert {
 
 	public SourceConvert(String fmt) {
 		softPath = PropertyReader.GetValueByKey(null, Constant.PRO_KEY_SOFT_PATH);
-		sourceFile = PropertyReader.GetValueByKey(null, Constant.PRO_KEY_SOURCE_FILE);
+		name = SourceReader.getNAME();
 		targetFilePath = PropertyReader.GetValueByKey(null, Constant.PRO_KEY_TARGET_FILE_PATH);
-		name = PropertyReader.GetValueByKey(null, Constant.PRO_KEY_NAME);
+		targetFilePath = String.format(targetFilePath, name);
 		waitTime = Long.valueOf(PropertyReader.GetValueByKey(null, Constant.WAIT_TIME));
 		this.fmt = fmt;
 	}

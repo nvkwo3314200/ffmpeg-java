@@ -16,11 +16,23 @@ public class SourceReader {
 	public static final String DEFAULT_SEPARATOR = "$";
 	public static final String COMMEND_SEPARATOR = "#";
 	private static List<String> list;
+	private static String NAME = "";
 
-	static {
+	public static void locationSource(String source) {
 		String filePath = PropertyReader.GetValueByKey(null, Constant.PRO_KEY_SOURCE_FILE);
+		if(source != null) filePath = source;
+		log.info("读取资源文件：{}", source);
 		try {
 			list = FileUtils.readLines(new File(filePath), "UTF-8");
+			for(String item : list) {
+				if (item.trim().startsWith(COMMEND_SEPARATOR)) {
+					if (item.trim().toLowerCase().startsWith(COMMEND_SEPARATOR + "name")) {
+						NAME = item.trim().substring(6);
+						break;
+					}
+				}
+				;
+			}
 		} catch (IOException e) {
 			log.error("读取资源文件失败， {}",e);
 		}
@@ -29,7 +41,7 @@ public class SourceReader {
 	public static Map<String, String> getSourceMap(String separator) {
 		Map<String, String> map = new HashMap<String, String>();
 		for(String item : list) {
-			if(item.trim().startsWith(COMMEND_SEPARATOR)) continue ;
+			if(item.trim().startsWith(COMMEND_SEPARATOR)) continue;
 			if(item == null || "".equals(item.trim())) continue;
 			String sep = String.format("\\%s", separator);
 			String[] spits = item.split(sep);
@@ -56,6 +68,10 @@ public class SourceReader {
 
 	public static Map<String, String> getSourceMap() {
 		return getSourceMap(DEFAULT_SEPARATOR);
+	}
+
+	public static String getNAME(){
+		return NAME;
 	}
 
 

@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import com.peak.reader.SourceReader;
 import com.peak.util.CommandUtils;
 import com.peak.util.ProcessInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ public class Ffmpeg implements  Runnable{
 	private String sourceFile;
 	private String targetFile;
 	private String key;
+	private String name = SourceReader.getNAME();
 
 	public Ffmpeg(String softPath, String sourceFile, String targetFile, String key) {
 		super();
@@ -26,7 +28,7 @@ public class Ffmpeg implements  Runnable{
 	}
 
 	public void run() {
-		log.info("{} 正在下载", key);
+		log.info("{} {} 正在下载", name, key);
 		List<String> command = new FfmpegCommand(softPath).getConvertMp4Cmd(sourceFile, targetFile);
 		Process process = CommandUtils.exec(command);
 		ProcessInfo info = new ProcessInfo();
@@ -36,7 +38,7 @@ public class Ffmpeg implements  Runnable{
 			while (readLine != null) {
 				String proc = info.parse(readLine);
 				if(proc != null) {
-					log.info("{} 下载进度 {} ", key, proc); //既有正常输出和error message。
+					log.info("{} {} 下载进度 {} ", name, key, proc); //既有正常输出和error message。
 				}
 				readLine = br.readLine();
 			}
