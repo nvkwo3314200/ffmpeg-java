@@ -1,9 +1,13 @@
 package com.peak.ffmpeg;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.peak.util.CommandUtils;
+import com.peak.util.ProcessInfo;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -24,7 +28,26 @@ public class Ffmpeg implements  Runnable{
 	public void run() {
 		log.info("{} 正在下载", key);
 		List<String> command = new FfmpegCommand(softPath).getConvertMp4Cmd(sourceFile, targetFile);
-		CommandUtils.exec(command);
+		Process process = CommandUtils.exec(command);
+		ProcessInfo info = new ProcessInfo();
+		BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		try {
+			String readLine = br.readLine();
+			while (readLine != null) {
+				String proc = info.parse(readLine);
+				if(proc != null) {
+					log.info("{} 下载进度 {} ", key, proc); //既有正常输出和error message。
+				}
+				readLine = br.readLine();
+			}
+		} catch (IOException e) {
+			log.error("{}", e);
+		}
+		try {
+			process.waitFor();
+		} catch (InterruptedException e) {
+			log.error("{}", e);
+		}
 	}
 
 	public Boolean call() throws Exception {
